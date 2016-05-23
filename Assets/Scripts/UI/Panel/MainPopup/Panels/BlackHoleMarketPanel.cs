@@ -640,6 +640,24 @@ public class BlackHoleMarketPanel : MonoBehaviour
 
     public void OnClickBuyMore()
     {
+        //Issue 9 - Check Asset for one more click: show error popup (2016-05-23)
+        if (_currentPriceType == 1)
+        {
+            if (DataManager.instance.netdata.player._Asset._Gold < _currentPrice)
+            {
+                setOpenErrorPopup(common.ResultCode.NOT_ENOUGH);
+                return;
+            }
+        }
+        else if (_currentPriceType == 2)
+        {
+            if (DataManager.instance.netdata.player._Asset._Ruby < _currentPrice)
+            {
+                setOpenErrorPopup(common.ResultCode.NOT_ENOUGH);
+                return;
+            }
+        }        
+
         _reBuy = true;
         clearNewItems();
         resetEffect();
