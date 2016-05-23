@@ -149,6 +149,11 @@ public class SkeletonRenderer : MonoBehaviour {
 	}
 
 	public virtual void OnDestroy () {
+
+        //Issue 2 - Memory : Clear SkeletonDataAssets ( 2016-05-13)
+        if (skeletonDataAsset != null)
+            skeletonDataAsset.Clear();
+
 		if (mesh1 != null) {
 			if (Application.isPlaying)
 				Destroy(mesh1);

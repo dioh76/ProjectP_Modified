@@ -55,6 +55,13 @@ public class SkeletonDataAsset : ScriptableObject {
 		stateData = null;
 	}
 
+    //Issue 2 - Memory : Clear Texture in material ( 2016-05-13)
+    public void Clear()
+    {
+        foreach (AtlasAsset aAsset in atlasAssets)
+            aAsset.Clear();
+    }
+
 	public SkeletonData GetSkeletonData (bool quiet) {
 		if (atlasAssets == null) {
 			atlasAssets = new AtlasAsset[0];

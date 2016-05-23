@@ -41,7 +41,7 @@ public class AssetbundleLoader
 
         //이미 로더 된것이 있으면 바로 넘겨 준다.
         if( LoadedAssetbundleList.ContainsKey( realAssetName ) )
-        {
+        {   
             loadedCallback( LoadedAssetbundleList[realAssetName] );
         } else
         {
@@ -133,14 +133,15 @@ public class AssetbundleLoader
 
                 www.assetBundle.Unload( false );
 
-                if( LoadedAssetbundleList.ContainsKey( _assetbundlename ) )
+                //Issue 2 - Memory : Cached SkeletonAnimation accumulate memory use ( 2016-05-13)
+                /*if( LoadedAssetbundleList.ContainsKey( _assetbundlename ) )
                 {
                     Debug.LogError( "already loaded " + _assetbundlename );
                 } else
                 {
                     //여기서 조작하면 될 듯 
                     LoadedAssetbundleList.Add( _assetbundlename, tem[0] as GameObject );
-                }
+                }*/
 
                 for( int i = 0; i < LoadingAssetbundleList[_assetbundlename].list.Count; i++ )
                 {

@@ -44,6 +44,15 @@ public class AtlasAsset : ScriptableObject {
 		atlas = null;
 	}
 
+    public void Clear()
+    {
+        if(atlas != null)
+        {
+            atlas.Dispose();
+            atlas = null;
+        }
+    }
+
 	/// <returns>The atlas or null if it could not be loaded.</returns>
 	public Atlas GetAtlas () {
 		if (atlasFile == null) {
@@ -176,6 +185,8 @@ public class MaterialsTextureLoader : TextureLoader {
 		}
 	}
 
-	public void Unload (object texture) {
+    //Issue 2 - Memory : Clear Texture in material ( 2016-05-13)
+    public void Unload (object texture) {
+        Resources.UnloadAsset(texture as UnityEngine.Object);
 	}
 }
