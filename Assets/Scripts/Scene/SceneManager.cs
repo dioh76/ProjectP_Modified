@@ -39,6 +39,8 @@ public class SceneManager : Immortal<SceneManager>
             return;
 
         Application.targetFrameRate = 60;
+        //Issue 8 - Application Pause: Set RunInBackground to false (2016-05-23)
+        Application.runInBackground = false;
 
         Init_FSM();
 
