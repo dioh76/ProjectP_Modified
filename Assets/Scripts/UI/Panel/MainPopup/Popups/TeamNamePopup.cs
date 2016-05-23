@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class TeamNamePopup : MonoBehaviour {
 
@@ -33,7 +34,7 @@ public class TeamNamePopup : MonoBehaviour {
     {
         _textString = _inputTextField.text;
 
-        if( _textString.Length < 2 || _textString.Length > 8 )
+        if (CheckValidName(_textString) == false)
         {
             iconCheck.gameObject.SetActive( false );
             iconX.gameObject.SetActive( true );
@@ -62,8 +63,22 @@ public class TeamNamePopup : MonoBehaviour {
                 _inputTextField.text = keyName;
         }
     }
-    
-	public void SetTeamNameField()
+
+    bool CheckValidName(string textName)
+    {
+        if (textName.Length < 2 || textName.Length > 8)
+            return false;
+
+        //Issue 5 - 한글 완성형 문제: 완성형이 아닌 캐릭터가 매칭이 되면 false를 리턴한다. 한글과 영문 조합은 현재로서는 가능하다. (2016-05-23)
+        //위의 업데이트 문에서 _pastString처리로 완성형 체크를 하는 것 같은데, RegEx로 처리를 하면 좀 더 나을듯 하다.
+        var rex = new Regex(@"[ㄱ-ㅎㅏ-ㅣ]");
+        if (rex.IsMatch(textName))
+            return false;
+
+        return true;
+    }
+
+    public void SetTeamNameField()
     {
         _keyboard = TouchScreenKeyboard.Open( "", TouchScreenKeyboardType.Default, false, false, false );
     }
