@@ -687,7 +687,12 @@ public class JsonLoader : Singleton<JsonLoader>
             }
             //Debug.Log( "str : " + _str + "       filename : " + filename + "   " + www.text );
             string savetext;
-            if( filename != "StageInfoList.json" )
+            if (www.text.StartsWith("<html>"))
+            {
+                //Error <html><h1>Not Found</h1><p>The resource could not be found.</p></html>
+                savetext = string.Empty;
+            }
+            else if (filename != "StageInfoList.json")
             {
                 savetext = Decrypt( www.text );
             } else

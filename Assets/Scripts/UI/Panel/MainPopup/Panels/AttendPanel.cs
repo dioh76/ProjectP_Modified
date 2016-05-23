@@ -655,14 +655,18 @@ public class AttendPanel : MonoBehaviour
         {
             _evenAccureLists = new List<AttendanceEvenLowData.DataInfo>();
 
-            //홀수
-            foreach (KeyValuePair<int, AttendanceEvenLowData.DataInfo> attendLowData in LowData._attendanceEvenLowData.DATAInfoDic)
+            if(_evenAccureLists.Count > 0)
             {
-                if (null == attendLowData.Value)
-                    continue;
+                //홀수
+                foreach (KeyValuePair<int, AttendanceEvenLowData.DataInfo> attendLowData in LowData._attendanceEvenLowData.DATAInfoDic)
+                {
+                    if (null == attendLowData.Value)
+                        continue;
 
-                if(attendLowData.Value.AttendanceType_b == 2)
-                    _evenAccureLists.Add(attendLowData.Value);
+                    if (attendLowData.Value.AttendanceType_b == 2)
+                        _evenAccureLists.Add(attendLowData.Value);
+
+                }
 
             }
         }
@@ -678,8 +682,11 @@ public class AttendPanel : MonoBehaviour
             }
             else
             {
-                result = DataManager.instance.netdata.player._Attend._Reward >= _evenAccureLists[i].AttendanceDay_b ? true : false;
-                _packageRewardItem[i].Init(i, _evenAccureLists[i].AttendanceDay_b, result, this.transform);
+                if (_evenAccureLists.Count > 0)
+                {
+                    result = DataManager.instance.netdata.player._Attend._Reward >= _evenAccureLists[i].AttendanceDay_b ? true : false;
+                    _packageRewardItem[i].Init(i, _evenAccureLists[i].AttendanceDay_b, result, this.transform);
+                }
             }
         }
     }
