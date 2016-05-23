@@ -274,21 +274,28 @@ public class SceneManager : Immortal<SceneManager>
 
         _operator.allowSceneActivation = true;
 
-        System.GC.Collect();
-        Resources.UnloadUnusedAssets();
-
         yield return new WaitForEndOfFrame();
 
+    }
+
+    void OnLevelWasLoaded(int level)
+    {
+        Resources.UnloadUnusedAssets();
     }
 
     IEnumerator loadingSequenceComplete()
     {
         yield return new WaitForEndOfFrame();
+
+        Resources.UnloadUnusedAssets();
     }
 
     public void StartLoading()
     {
-        _loadPanel.transform.SetParent( UIManager.instance.transform );
+        string path = "Game/Common/LoadingPanel";
+        _loadPanel = (GameObject)Object.Instantiate((Object)Resources.Load(path));
+
+        _loadPanel.transform.SetParent(this.transform);
         _loadPanel.transform.localPosition = new Vector3( 0f, 0f, -2001f );
         _loadPanel.transform.localScale = Vector3.one;
         _loadPanel.transform.localRotation = Quaternion.identity;
@@ -300,7 +307,8 @@ public class SceneManager : Immortal<SceneManager>
 
     public void UpdateLoadingPanelGage( int value )
     {
-        _loadPanel.GetComponent<SceneLoadingPanel>().SetLoadGauge( (int)value );
+        if(_loadPanel != null)
+            _loadPanel.GetComponent<SceneLoadingPanel>().SetLoadGauge( (int)value );
     }
 
     public void EndLoading()
@@ -310,7 +318,9 @@ public class SceneManager : Immortal<SceneManager>
         _loadPanel.transform.localPosition = new Vector3( 0f, 0f, -2001f );
         _loadPanel.transform.localScale = Vector3.one;
         _loadPanel.transform.localRotation = Quaternion.identity;
-        _loadPanel.gameObject.SetActive( false );
+
+        GameObject.Destroy(_loadPanel);
+        _loadPanel = null;
     }
 
     string findSceneName( E_SCENE_TYPE sceneType )
@@ -388,7 +398,7 @@ public class SceneManager : Immortal<SceneManager>
 
     void loadLoadingPanel()
     {
-        string path = "Game/Common/LoadingPanel";
+        /*string path = "Game/Common/LoadingPanel";
         _loadPanel = (GameObject)Object.Instantiate( (Object)Resources.Load( path ) );
 
         if( null == _loadPanel )
@@ -399,5 +409,6 @@ public class SceneManager : Immortal<SceneManager>
         _loadPanel.transform.localScale = Vector3.one;
         _loadPanel.transform.localRotation = Quaternion.identity;
         _loadPanel.gameObject.SetActive( false );
+        */
     }
 }

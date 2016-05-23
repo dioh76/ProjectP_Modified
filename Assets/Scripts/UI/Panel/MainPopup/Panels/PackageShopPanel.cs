@@ -39,6 +39,14 @@ public class PackageShopPanel : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        for (int i = 0; i < _tempTextures.Length; i++)
+        {
+            Resources.UnloadAsset(_tempTextures[i]);
+        }
+    }
+
     public void LoadPanel()
     {
         this.transform.localPosition = new Vector3(0f, 0f, -1550f);

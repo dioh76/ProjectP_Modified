@@ -9,6 +9,14 @@ public class SceneLoadingPanel : MonoBehaviour
     public EnergyBar _progressBar;
     public GameObject[] _loadingPage;
 
+    void OnDestroy()
+    {
+        for (int i = 0; i < _loadingPage.Length; i++)
+        {
+            Resources.UnloadAsset(_loadingPage[i].GetComponent<Image>().mainTexture);
+        }        
+    }
+
     public void SetPage()
     {
         for( int i = 0; i < _loadingPage.Length; i++ )

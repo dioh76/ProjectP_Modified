@@ -232,6 +232,8 @@ public class InGameTopPlace : MonoBehaviour
         SoundManager.Instance.PlayBGM( BGMSoundNameList.Adventure_BGM );
         //ChangeMode( E_GAME_RUNMODE.RUN );
         loadingList[0] = true;
+
+        Resources.UnloadUnusedAssets();
     }
 
     void setNativeActivityTracking()
